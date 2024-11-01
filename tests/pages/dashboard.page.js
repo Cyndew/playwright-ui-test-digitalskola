@@ -1,21 +1,19 @@
-// dashboard.page.js
+const { expect } = require('@playwright/test');
+
 class DashboardPage {
-  constructor(page) {
-      this.page = page;
-  }
+    constructor(page) {
+        this.page = page;
+        this.addToCartButton = 'text=Add to cart';
+    }
 
-  async validateUserIsOnDashboard() {
-      await this.page.waitForSelector('.inventory_list');
-  }
+    async visualAssertion() {
+        // Visual assertion to compare dashboard page with stored snapshot
+        await expect(this.page).toHaveScreenshot('dashboard-page-snapshot.png');
+    }
 
-  async addSpecificItemToCart(itemName) {
-
-      await this.page.click(`text=${itemName} >> xpath=../.. >> button:has-text("Add to cart")`);
-  }
-
-  async goToCart() {
-      await this.page.click('.shopping_cart_link');
-  }
+    async addItemToCart() {
+        await this.page.click(this.addToCartButton);
+    }
 }
 
 module.exports = DashboardPage;

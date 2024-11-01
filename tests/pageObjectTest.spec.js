@@ -1,19 +1,15 @@
-const { test, expect } = require('@playwright/test');
-const LoginPage = require('../pages/login.page');
-const DashboardPage = require('../pages/dashboard.page');
-const CartPage = require('../pages/cart.page');
+const { test, expect } = require('@playwright/test'); // Pastikan test dan expect diimpor
+const path = require('path');
+const LoginPage = require(path.resolve(__dirname, './pages/login.page.js'));
+const DashboardPage = require(path.resolve(__dirname, './pages/dashboard.page.js'));
+const CartPage = require(path.resolve(__dirname, './pages/cart.page.js'));
 
-test('SauceDemo Page Object Test - User success login and adds item to cart', async ({ page }) => {
+test('Visual assertion for each page', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const cartPage = new CartPage(page);
 
-    // Login ke aplikasi
-    await loginPage.goto();
-    await loginPage.login('standard_user', 'secret_sauce');
-  
-    await dashboardPage.verifyOnDashboard();
-
-    await cartPage.addItemToCart();
-    await cartPage.verifyItemInCart();
+    await loginPage.visualAssertion();
+    await dashboardPage.visualAssertion();
+    await cartPage.visualAssertion();
 });
